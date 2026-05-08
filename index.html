@@ -1,25 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Andrew Chen</title>
-<meta name="description" content="Andrew Chen — Commerce/Law student at UNSW, aspiring M&A advisor. Finance, corporate law, and leadership." />
+<meta name="description" content="Andrew Chen — Commerce/Law student at UNSW, finance, corporate law, football." />
 <link rel="icon" type="image/x-icon" href="images/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #FAFAF8;
-    --ink: #1A1A1A;
-    --mute: #6B6B6B;
-    --line: #E5E5E5;
+    --bg:          #FAFAF8;
+    --bg-nav:      rgba(250, 250, 248, 0.88);
+    --ink:         #1A1A1A;
+    --ink-2:       #2a2a2a;
+    --ink-3:       #595955;
+    --mute:        #6B6B6B;
+    --line:        #E5E5E5;
     --line-strong: #D6D6D2;
+    --logo-bg:     #fff;
     --serif: "Playfair Display", "Iowan Old Style", "Georgia", serif;
-    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --max: 720px;
-    --pad-y: 100px;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --max:   720px;
+    --pad-y: 72px;
+  }
+  html[data-theme="dark"] {
+    --bg:          #111110;
+    --bg-nav:      rgba(17, 17, 16, 0.88);
+    --ink:         #EDEDEA;
+    --ink-2:       #D0D0CB;
+    --ink-3:       #9A9A95;
+    --mute:        #888882;
+    --line:        #272725;
+    --line-strong: #363634;
+    --logo-bg:     #1e1e1c;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -35,10 +50,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    transition: background 220ms ease, color 220ms ease;
   }
 
-  ::selection { background: #1A1A1A; color: #FAFAF8; }
-
+  ::selection { background: var(--ink); color: var(--bg); }
   a { color: inherit; text-decoration: none; }
 
   /* ——— Nav ——— */
@@ -55,7 +70,7 @@
     transition: background 200ms ease, border-color 200ms ease, padding 200ms ease, backdrop-filter 200ms ease;
   }
   .nav.is-stuck {
-    background: rgba(250, 250, 248, 0.88);
+    background: var(--bg-nav);
     backdrop-filter: saturate(140%) blur(8px);
     -webkit-backdrop-filter: saturate(140%) blur(8px);
     border-bottom-color: var(--line);
@@ -66,6 +81,11 @@
     font-size: 18px;
     font-weight: 500;
     letter-spacing: 0.005em;
+  }
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
   .nav__links {
     display: flex;
@@ -89,6 +109,26 @@
     transition: transform 220ms ease;
   }
   .nav__links a:hover::after { transform: scaleX(1); }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--mute);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 180ms ease, background 180ms ease;
+    width: 28px;
+    height: 28px;
+  }
+  .theme-toggle:hover { color: var(--ink); background: var(--line); }
+  .theme-toggle svg { display: block; flex: none; }
+  html[data-theme="dark"]  .icon-sun  { display: none; }
+  html[data-theme="light"] .icon-moon { display: none; }
+
   @media (max-width: 640px) {
     .nav { padding: 18px 22px; }
     .nav.is-stuck { padding: 14px 22px; }
@@ -107,13 +147,8 @@
     .wrap { padding-left: 22px; padding-right: 22px; }
   }
 
-  section {
-    padding-top: var(--pad-y);
-    padding-bottom: var(--pad-y);
-  }
-  @media (max-width: 768px) {
-    :root { --pad-y: 72px; }
-  }
+  section { padding-top: var(--pad-y); padding-bottom: var(--pad-y); }
+  @media (max-width: 768px) { :root { --pad-y: 52px; } }
 
   /* ——— Section labels ——— */
   .label {
@@ -122,7 +157,7 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--mute);
-    margin: 0 0 36px;
+    margin: 0 0 32px;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -133,12 +168,6 @@
     height: 1px;
     background: var(--ink);
     flex: none;
-  }
-
-  .divider {
-    border: 0;
-    border-top: 1px solid var(--line);
-    margin: 0;
   }
 
   /* ——— Reveal on scroll ——— */
@@ -155,20 +184,20 @@
   }
 
   /* ——— Hero ——— */
-  .hero {
-    padding-top: 140px;
-    padding-bottom: 120px;
-  }
+  .hero { padding-top: 130px; padding-bottom: 80px; }
   .hero__grid {
     display: grid;
     grid-template-columns: 35% 1fr;
-    gap: 56px;
+    gap: 52px;
     align-items: start;
   }
   @media (max-width: 768px) {
-    .hero { padding-top: 110px; padding-bottom: 80px; }
-    .hero__grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero { padding-top: 100px; padding-bottom: 60px; }
+    .hero__grid { grid-template-columns: 1fr; gap: 28px; }
   }
+
+  #portrait-col { padding-top: 32px; }
+  @media (max-width: 768px) { #portrait-col { padding-top: 0; } }
 
   .portrait {
     aspect-ratio: 4 / 5;
@@ -186,29 +215,40 @@
     display: block;
   }
   @media (max-width: 768px) {
-    .portrait { max-width: 260px; aspect-ratio: 1 / 1; border-radius: 999px; }
+    .portrait { max-width: 200px; aspect-ratio: 1 / 1; border-radius: 999px; }
   }
 
   h1.name {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(40px, 6vw, 56px);
+    font-size: clamp(38px, 6vw, 54px);
     line-height: 1.05;
     letter-spacing: -0.01em;
-    margin: 0 0 22px;
+    margin: 0 0 16px;
   }
   .hero__role {
     color: var(--mute);
-    font-size: 18px;
-    line-height: 1.55;
-    margin: 0 0 28px;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 24px;
   }
-  .hero__role span { display: block; }
-  .hero__bio {
-    font-size: 16.5px;
-    line-height: 1.8;
-    margin: 0 0 32px;
+  .hero__role .degree {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+  .hero__role .tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
     color: var(--ink);
+    letter-spacing: 0.005em;
+  }
+  .hero__bio {
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0 0 28px;
+    color: var(--ink-2);
     text-wrap: pretty;
     max-width: 56ch;
   }
@@ -216,7 +256,7 @@
   .inline-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px 36px;
+    gap: 10px 32px;
     font-size: 14px;
     color: var(--mute);
   }
@@ -226,27 +266,51 @@
     border-bottom: 1px solid transparent;
     transition: color 180ms ease, border-color 180ms ease;
   }
-  .inline-links a:hover {
-    color: var(--ink);
-    border-bottom-color: var(--ink);
-  }
+  .inline-links a:hover { color: var(--ink); border-bottom-color: var(--ink); }
   .inline-links .arrow { display: inline-block; transition: transform 200ms ease; }
   .inline-links a:hover .arrow { transform: translate(2px, -2px); }
 
-  /* ——— Entry layout (Education + Experience) ——— */
+  /* ——— Company logo chip ——— */
+  .co-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--logo-bg);
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 220ms ease, background 220ms ease;
+  }
+  .co-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: 2px;
+  }
+
+  /* ——— Entry layout ——— */
   .entry {
     display: grid;
     grid-template-columns: 1fr auto;
     column-gap: 24px;
-    row-gap: 8px;
-    padding: 28px 0;
+    row-gap: 0;
+    padding: 26px 0;
     border-top: 1px solid var(--line);
   }
   .entry:first-of-type { border-top: 1px solid var(--ink); }
-  .entry--sub {
-    color: var(--mute);
+  .entry--sub .entry__title { font-weight: 400; color: var(--mute); }
+
+  .entry__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
   }
-  .entry--sub .entry__title { font-weight: 400; }
+  .entry__header-text { flex: 1; }
+
   .entry__title {
     font-family: var(--serif);
     font-size: 19px;
@@ -254,144 +318,110 @@
     line-height: 1.3;
     letter-spacing: 0.005em;
     margin: 0;
+    color: var(--ink);
   }
   .entry__sub {
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--mute);
-    margin: 0;
+    margin: 3px 0 0;
   }
   .entry__meta {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--mute);
     text-align: right;
     white-space: nowrap;
     letter-spacing: 0.01em;
     align-self: start;
-    padding-top: 4px;
+    padding-top: 5px;
   }
-  .entry__body {
-    grid-column: 1 / -1;
-    margin-top: 14px;
-    font-size: 15.5px;
-    line-height: 1.75;
-    color: #2a2a2a;
-    text-wrap: pretty;
-  }
-  .entry--sub .entry__body { color: #595955; font-size: 14.5px; }
   .entry__list {
     grid-column: 1 / -1;
-    margin: 12px 0 0;
+    margin: 14px 0 0;
     padding: 0;
     list-style: none;
     display: grid;
-    gap: 8px;
+    gap: 7px;
   }
   .entry__list li {
     font-size: 15px;
-    color: #2a2a2a;
+    color: var(--ink-2);
     padding-left: 18px;
     position: relative;
-    line-height: 1.6;
+    line-height: 1.65;
   }
   .entry__list li::before {
     content: "";
     position: absolute;
-    left: 0; top: 0.7em;
+    left: 0; top: 0.72em;
     width: 8px;
     height: 1px;
     background: var(--mute);
   }
-  .entry--sub .entry__list li { color: #5d5d58; font-size: 14px; }
+  .entry--sub .entry__list li { color: var(--ink-3); font-size: 14px; }
 
   @media (max-width: 540px) {
     .entry { grid-template-columns: 1fr; }
-    .entry__meta { text-align: left; padding-top: 0; font-size: 12.5px; }
+    .entry__meta { text-align: left; padding-top: 0; }
   }
 
   /* Sub-role inside same company */
   .entry__subrole {
     grid-column: 1 / -1;
-    margin-top: 18px;
-    padding-top: 18px;
+    margin-top: 16px;
+    padding-top: 16px;
     border-top: 1px dashed var(--line);
     display: grid;
     grid-template-columns: 1fr auto;
     column-gap: 24px;
-    row-gap: 6px;
+    row-gap: 0;
   }
   .entry__subrole-title {
     font-family: var(--serif);
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 500;
     margin: 0;
     color: var(--ink);
   }
+  .entry__subrole-label {
+    font-size: 12px;
+    color: var(--mute);
+    margin: 2px 0 0;
+    letter-spacing: 0.01em;
+  }
   .entry__subrole-meta {
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--mute);
     text-align: right;
     white-space: nowrap;
+    align-self: start;
+    padding-top: 3px;
   }
-  .entry__subrole-body {
+  .entry__subrole-list {
     grid-column: 1 / -1;
-    font-size: 15px;
-    line-height: 1.75;
-    color: #2a2a2a;
-    margin: 6px 0 0;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 7px;
+  }
+  .entry__subrole-list li {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .entry__subrole-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.72em;
+    width: 8px;
+    height: 1px;
+    background: var(--mute);
   }
   @media (max-width: 540px) {
     .entry__subrole { grid-template-columns: 1fr; }
     .entry__subrole-meta { text-align: left; }
-  }
-
-  /* ——— Projects ——— */
-  .projects {
-    display: grid;
-    gap: 0;
-  }
-  .project {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    column-gap: 24px;
-    padding: 28px 0;
-    border-top: 1px solid var(--line);
-  }
-  .project:first-child { border-top: 1px solid var(--ink); }
-  .project__title {
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.3;
-    margin: 0 0 6px;
-    letter-spacing: 0.005em;
-  }
-  .project__type {
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--mute);
-    margin: 0;
-  }
-  .project__num {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 14px;
-    color: var(--mute);
-    align-self: start;
-    padding-top: 4px;
-  }
-  .project__body {
-    grid-column: 1 / -1;
-    margin-top: 14px;
-    font-size: 15.5px;
-    line-height: 1.75;
-    color: #2a2a2a;
-    text-wrap: pretty;
-    max-width: 60ch;
-  }
-  @media (max-width: 540px) {
-    .project { grid-template-columns: 1fr; }
-    .project__num { display: none; }
   }
 
   /* ——— Leadership grid ——— */
@@ -402,34 +432,42 @@
     border-top: 1px solid var(--ink);
   }
   .lead-grid > * {
-    padding: 24px 28px 24px 0;
+    padding: 22px 26px 22px 0;
     border-bottom: 1px solid var(--line);
   }
   .lead-grid > *:nth-child(odd) {
     border-right: 1px solid var(--line);
-    padding-right: 28px;
+    padding-right: 26px;
   }
   .lead-grid > *:nth-child(even) {
-    padding-left: 28px;
+    padding-left: 26px;
     padding-right: 0;
   }
+  .lead-item__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .lead-item__head-text { flex: 1; }
   .lead-item__title {
     font-family: var(--serif);
     font-size: 17px;
     font-weight: 500;
-    margin: 0 0 4px;
+    margin: 0 0 3px;
     letter-spacing: 0.005em;
+    color: var(--ink);
   }
   .lead-item__meta {
-    font-size: 12.5px;
+    font-size: 12px;
     color: var(--mute);
-    margin: 0 0 10px;
+    margin: 0;
     font-style: italic;
   }
   .lead-item__body {
-    font-size: 14.5px;
+    font-size: 14px;
     line-height: 1.7;
-    color: #2a2a2a;
+    color: var(--ink-2);
     margin: 0;
     text-wrap: pretty;
   }
@@ -437,19 +475,16 @@
     .lead-grid { grid-template-columns: 1fr; }
     .lead-grid > *,
     .lead-grid > *:nth-child(odd),
-    .lead-grid > *:nth-child(even) {
-      padding: 22px 0;
-      border-right: 0;
-    }
+    .lead-grid > *:nth-child(even) { padding: 20px 0; border-right: 0; }
   }
 
-  /* ——— Skills section ——— */
+  /* ——— Skills ——— */
   .skills {
     display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 16px 32px;
+    grid-template-columns: 150px 1fr;
+    gap: 14px 32px;
     border-top: 1px solid var(--ink);
-    padding-top: 28px;
+    padding-top: 26px;
   }
   .skills dt {
     font-size: 12px;
@@ -457,48 +492,47 @@
     letter-spacing: 0.14em;
     color: var(--mute);
     padding-top: 4px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
   }
   .skills dd {
     margin: 0;
-    font-size: 15.5px;
+    font-size: 15px;
     line-height: 1.7;
     color: var(--ink);
     border-bottom: 1px solid var(--line);
-    padding-bottom: 16px;
-  }
-  .skills dt {
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 16px;
+    padding-bottom: 14px;
   }
   .skills dt:last-of-type, .skills dd:last-of-type { border-bottom: 0; padding-bottom: 0; }
   @media (max-width: 540px) {
     .skills { grid-template-columns: 1fr; gap: 4px 0; }
     .skills dt { padding-bottom: 4px; border-bottom: 0; }
-    .skills dd { padding-bottom: 18px; margin-bottom: 4px; }
+    .skills dd { padding-bottom: 16px; margin-bottom: 2px; }
   }
 
   /* ——— Contact ——— */
-  .contact { text-align: center; padding-bottom: 80px; }
+  .contact { text-align: center; padding-bottom: 64px; }
   .contact__head {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(32px, 4.4vw, 40px);
+    font-size: clamp(30px, 4.4vw, 38px);
     line-height: 1.1;
-    margin: 0 0 18px;
+    margin: 0 0 16px;
     letter-spacing: -0.005em;
+    color: var(--ink);
   }
   .contact__sub {
     color: var(--mute);
-    font-size: 16px;
+    font-size: 15.5px;
     line-height: 1.7;
-    margin: 0 auto 36px;
-    max-width: 44ch;
+    margin: 0 auto 32px;
+    max-width: 42ch;
   }
   .contact__links {
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px 40px;
+    gap: 12px 36px;
     font-size: 15px;
     color: var(--ink);
   }
@@ -511,12 +545,45 @@
   .contact__links .arrow { display: inline-block; transition: transform 200ms ease; }
   .contact__links a:hover .arrow { transform: translate(2px, -2px); }
 
+  /* ——— Org link hover colours ——— */
+  :root {
+    --org-unsw: #B8920A; --org-mhs: #003865; --org-uon: #2C3E50;
+    --org-kcn:  #174A7E; --org-re:  #217A78; --org-fmaa: #14375C; --org-ucc: #B87A0A;
+  }
+  html[data-theme="dark"] {
+    --org-unsw: #FFD100; --org-mhs: #7BAACC; --org-uon: #8BAFD4;
+    --org-kcn:  #6BA3D4; --org-re:  #5BBFBE; --org-fmaa: #7BADD4; --org-ucc: #F5A623;
+  }
+
+  .entry__title a, .entry__sub a, .lead-item__title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+  a.org-unsw:hover { color: var(--org-unsw); }
+  a.org-mhs:hover  { color: var(--org-mhs);  }
+  a.org-uon:hover  { color: var(--org-uon);  }
+  a.org-kcn:hover  { color: var(--org-kcn);  }
+  a.org-re:hover   { color: var(--org-re);   }
+  a.org-fmaa:hover { color: var(--org-fmaa); }
+  a.org-ucc:hover  { color: var(--org-ucc);  }
+
+  .entry__header:has(a.org-unsw:hover) .co-logo { border-color: var(--org-unsw); }
+  .entry__header:has(a.org-mhs:hover)  .co-logo { border-color: var(--org-mhs);  }
+  .entry__header:has(a.org-uon:hover)  .co-logo { border-color: var(--org-uon);  }
+  .entry__header:has(a.org-kcn:hover)  .co-logo { border-color: var(--org-kcn);  }
+  .entry__header:has(a.org-re:hover)   .co-logo { border-color: var(--org-re);   }
+  .lead-item__head:has(a.org-fmaa:hover) .co-logo { border-color: var(--org-fmaa); }
+  .lead-item__head:has(a.org-ucc:hover)  .co-logo { border-color: var(--org-ucc);  }
+  .lead-item__head:has(a.org-unsw:hover) .co-logo { border-color: var(--org-unsw); }
+  .lead-item__head:has(a.org-mhs:hover)  .co-logo { border-color: var(--org-mhs);  }
+
   /* ——— Footer ——— */
   footer {
     text-align: center;
     color: var(--mute);
     font-size: 13px;
-    padding: 28px 0 40px;
+    padding: 24px 0 36px;
     border-top: 1px solid var(--line);
     letter-spacing: 0.02em;
   }
@@ -526,85 +593,112 @@
 
 <nav class="nav" id="nav" aria-label="Primary">
   <a href="#top" class="nav__brand">Andrew Chen</a>
-  <div class="nav__links">
-    <a href="#experience">Experience</a>
-    <a href="#leadership">Leadership</a>
-    <a href="#contact">Contact</a>
+  <div class="nav__right">
+    <div class="nav__links">
+      <a href="#experience">Experience</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="8" cy="8" r="2.75"/>
+        <line x1="8" y1="1.25" x2="8" y2="2.75"/>
+        <line x1="8" y1="13.25" x2="8" y2="14.75"/>
+        <line x1="1.25" y1="8" x2="2.75" y2="8"/>
+        <line x1="13.25" y1="8" x2="14.75" y2="8"/>
+        <line x1="3.40" y1="3.40" x2="4.46" y2="4.46"/>
+        <line x1="11.54" y1="11.54" x2="12.60" y2="12.60"/>
+        <line x1="12.60" y1="3.40" x2="11.54" y2="4.46"/>
+        <line x1="4.46" y1="11.54" x2="3.40" y2="12.60"/>
+      </svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M13.5 10.5A6 6 0 0 1 5.5 2.5a6 6 0 1 0 8 8z"/>
+      </svg>
+    </button>
   </div>
 </nav>
 
 <main id="top">
 
-  <!-- ============================ HERO ============================ -->
+  <!-- HERO -->
   <section class="hero" aria-label="Introduction">
     <div class="wrap">
       <div class="hero__grid">
-        <div class="reveal">
+        <div class="reveal" id="portrait-col">
           <div class="portrait" role="img" aria-label="Andrew Chen">
-            <img src="images/profile.JPEG" alt="Andrew Chen" />
+            <img src="images/Profile.JPEG" alt="Andrew Chen" />
           </div>
         </div>
-        <div class="reveal" style="--rd: 120ms;">
+        <div class="reveal" style="--rd: 100ms;">
           <h1 class="name">Andrew Chen</h1>
           <p class="hero__role">
-            <span>Commerce (Finance) &amp; Law — UNSW</span>
-            <span>Aspiring M&amp;A Advisor</span>
+            <span class="degree">Commerce (Finance) &amp; Law — UNSW</span>
+            <span class="tagline">Student · Footballer · Developer</span>
           </p>
-          <p class="hero__bio">
-            I'm a second-year Commerce/Law student at UNSW with hands-on
-            experience in financial modelling and corporate law. I'm drawn to
-            the intersection of the two — where deals get structured, analysed,
-            and executed. Outside of work and study, I play football at the NPL
-            level and care about doing things with rigour.
-          </p>
+          <p class="hero__bio">Second-year Commerce/Law student at UNSW with experience in corporate finance and corporate law. I'm drawn to where deals get structured, analysed, and executed. Outside of work I play football at the NPL level, build things with code, and care about executing projects with intention, passion, and hard work.</p>
           <div class="inline-links">
-            <a href="https://www.linkedin.com/in/andrewchenn/" aria-label="View Andrew's LinkedIn profile" target="_blank" rel="noopener">View my LinkedIn <span class="arrow">↗</span></a>
-            <a href="mailto:andrewnehc11@gmail.com" aria-label="Email Andrew">andrewnehc11@gmail.com</a>
+            <a href="https://www.linkedin.com/in/andrewchenn/" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
+            <a href="https://www.instagram.com/andrewchenn/" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a>
+            <a href="https://www.facebook.com/andrewchenn/" target="_blank" rel="noopener">Facebook <span class="arrow">↗</span></a>
+            <a href="mailto:andrewnehc11@gmail.com">andrewnehc11@gmail.com</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ EDUCATION ============================ -->
+  <!-- EDUCATION -->
   <section id="education" aria-label="Education">
     <div class="wrap">
       <p class="label reveal">Education</p>
 
       <article class="entry reveal">
-        <div>
-          <h3 class="entry__title">University of New South Wales</h3>
-          <p class="entry__sub">Bachelor of Commerce (Finance) / Bachelor of Laws (LLB)</p>
+        <div class="entry__header">
+          <div class="co-logo">
+            <img src="images/unsw.png" alt="UNSW" />
+          </div>
+          <div class="entry__header-text">
+            <h3 class="entry__title"><a class="org-unsw" href="https://www.unsw.edu.au/" target="_blank" rel="noopener">University of New South Wales</a></h3>
+            <p class="entry__sub">Bachelor of Commerce (Finance) / Bachelor of Laws (LLB)</p>
+          </div>
         </div>
-        <p class="entry__meta">Sydney · Jan 2025 – Dec 2029</p>
+        <p class="entry__meta">Sydney · 2025 — 2029</p>
         <ul class="entry__list">
-          <li>WAM 84.375 overall · 87.000 (Finance)</li>
+          <li>Distinction overall · High Distinction (Finance)</li>
           <li>UNSW Business School Dean's Award — Stage 1 (Top 3% of cohort)</li>
-          <li>Notable marks: 92 — Collaboration &amp; Innovation in Business; 90 — Business Decision Making; 90 — Evidence Based Problem Solving</li>
+          <li>FMAA Subcommittee Member · UNSW Consulting Club — Case Competition Squad &amp; Publications Associate</li>
         </ul>
       </article>
 
       <article class="entry reveal">
-        <div>
-          <h3 class="entry__title">Merewether High School</h3>
-          <p class="entry__sub">Higher School Certificate (HSC)</p>
+        <div class="entry__header">
+          <div class="co-logo">
+            <img src="images/mhs.png" alt="Merewether High School" />
+          </div>
+          <div class="entry__header-text">
+            <h3 class="entry__title"><a class="org-mhs" href="https://merewether-h.schools.nsw.gov.au/" target="_blank" rel="noopener">Merewether High School</a></h3>
+            <p class="entry__sub">Higher School Certificate</p>
+          </div>
         </div>
-        <p class="entry__meta">Newcastle · Graduated Nov 2024</p>
+        <p class="entry__meta">Newcastle · 2024</p>
         <ul class="entry__list">
           <li>ATAR 98.90</li>
           <li>Elected Vice Captain &amp; Student Representative Council</li>
-          <li>Evatt Model United Nations — State Finalist</li>
-          <li>State Debating representative</li>
-          <li>First Team State Football</li>
+          <li>Evatt Model United Nations (NSW Finalist) · State Debating &amp; Public Speaking · First Team Football · Mock Trial Team</li>
         </ul>
       </article>
 
       <article class="entry entry--sub reveal">
-        <div>
-          <h3 class="entry__title">University of Newcastle</h3>
-          <p class="entry__sub">High Performing Students Program</p>
+        <div class="entry__header">
+          <div class="co-logo">
+            <img src="images/uon.png" alt="University of Newcastle" />
+          </div>
+          <div class="entry__header-text">
+            <h3 class="entry__title"><a class="org-uon" href="https://www.newcastle.edu.au/" target="_blank" rel="noopener">University of Newcastle</a></h3>
+            <p class="entry__sub">High Performing Students Program</p>
+          </div>
         </div>
-        <p class="entry__meta">Jan 2022 – Apr 2022</p>
+        <p class="entry__meta">2022</p>
         <ul class="entry__list">
           <li>Object Oriented Programming (SENG1110) — High Distinction</li>
         </ul>
@@ -612,207 +706,179 @@
     </div>
   </section>
 
-  <!-- ============================ EXPERIENCE ============================ -->
+  <!-- EXPERIENCE -->
   <section id="experience" aria-label="Experience">
     <div class="wrap">
       <p class="label reveal">Experience</p>
 
       <article class="entry reveal">
-        <div>
-          <h3 class="entry__title">Finance &amp; Commercial Analyst</h3>
-          <p class="entry__sub">Kingsgate Consolidated Limited <span style="opacity:.7">(ASX: KCN)</span></p>
+        <div class="entry__header">
+          <div class="co-logo">
+            <img src="images/kcn.png" alt="Kingsgate Consolidated" />
+          </div>
+          <div class="entry__header-text">
+            <h3 class="entry__title">Finance &amp; Commercial — Analyst</h3>
+            <p class="entry__sub"><a class="org-kcn" href="https://www.kingsgate.com.au/" target="_blank" rel="noopener">Kingsgate Consolidated Limited</a> <span style="opacity:.65">(ASX: KCN)</span></p>
+          </div>
         </div>
-        <p class="entry__meta">Sydney · Apr 2026 – Present</p>
-        <p class="entry__body">
-          Evaluate mining acquisitions by building asset valuation models, analysing
-          production profiles, and assessing all-in sustaining costs (AISCs). Model
-          unit cost calculations and project capital expenditure requirements through
-          analysis of budgets and pre-feasibility studies.
-        </p>
-
+        <p class="entry__meta">Sydney · Apr 2026 — Present</p>
+        <ul class="entry__list">
+          <li>Built asset valuation models to evaluate mining acquisition targets — analysed production profiles and AISCs to stress-test deal economics</li>
+          <li>Modelled unit cost calculations and projected capital expenditure from budgets and pre-feasibility studies</li>
+        </ul>
         <div class="entry__subrole">
-          <h4 class="entry__subrole-title">Paralegal — Corporate</h4>
-          <p class="entry__subrole-meta">Feb 2026 – Apr 2026</p>
-          <p class="entry__subrole-body">
-            Researched and prepared a pitch deck on a potential offshore IPO offering.
-            Managed corporate governance matters including ASIC filings, corporate
-            records maintenance, and board governance.
-          </p>
+          <div class="entry__header">
+            <div class="co-logo" style="width:22px;height:22px;flex:none;">
+              <img src="images/kcn.png" alt="Kingsgate Consolidated" />
+            </div>
+            <div class="entry__header-text">
+              <h4 class="entry__subrole-title">Paralegal — Corporate</h4>
+              <p class="entry__subrole-label">Kingsgate Consolidated Limited</p>
+            </div>
+          </div>
+          <p class="entry__subrole-meta">Feb 2026 — Apr 2026</p>
+          <ul class="entry__subrole-list">
+            <li>Researched and prepared a pitch deck on a potential offshore IPO — covered market entry, regulatory context, and deal structure</li>
+            <li>Managed corporate governance including ASIC filings, corporate records maintenance, and board governance</li>
+          </ul>
         </div>
       </article>
 
       <article class="entry reveal">
-        <div>
-          <h3 class="entry__title">Paralegal — Commercial Team</h3>
-          <p class="entry__sub">Rankin Ellison Lawyers</p>
+        <div class="entry__header">
+          <div class="co-logo">
+            <img src="images/rankin-ellison.png" alt="Rankin Ellison Lawyers" />
+          </div>
+          <div class="entry__header-text">
+            <h3 class="entry__title">Paralegal — Commercial Team</h3>
+            <p class="entry__sub"><a class="org-re" href="https://rankinellison.com.au/" target="_blank" rel="noopener">Rankin Ellison Lawyers</a></p>
+          </div>
         </div>
-        <p class="entry__meta">Sydney · Feb 2025 – Feb 2026</p>
-        <p class="entry__body">
-          Drafted legal affidavits, initial advices, and client correspondence for
-          commercial and insurance matters. Conducted due diligence for conveyancing
-          and commercial litigation, and produced research reports to support case
-          preparation and client inquiries.
-        </p>
+        <p class="entry__meta">Sydney · Feb 2025 — Feb 2026</p>
+        <ul class="entry__list">
+          <li>Drafted legal affidavits, initial advices, and client correspondence for commercial and insurance matters</li>
+          <li>Conducted due diligence for conveyancing and commercial litigation; produced research reports to support case preparation and client inquiries</li>
+        </ul>
       </article>
     </div>
   </section>
 
-  <!-- ============================ PROJECTS ============================ -->
-  <section id="projects" aria-label="Projects and deal experience">
-    <div class="wrap">
-      <p class="label reveal">Projects</p>
-
-      <div class="projects">
-        <article class="project reveal">
-          <div>
-            <h3 class="project__title">Mining Acquisition Valuation — Kingsgate Consolidated</h3>
-            <p class="project__type">Financial Modelling · M&amp;A Analysis</p>
-          </div>
-          <span class="project__num">01</span>
-          <p class="project__body">
-            Built asset valuation models to support evaluation of mining acquisition
-            targets at an ASX-listed gold producer. Analysed production profiles and
-            assessed all-in sustaining costs (AISCs) to stress-test deal economics
-            and project capital requirements.
-          </p>
-        </article>
-
-        <article class="project reveal">
-          <div>
-            <h3 class="project__title">Offshore IPO — Pitch Deck &amp; Market Research</h3>
-            <p class="project__type">Capital Markets · Strategic Research</p>
-          </div>
-          <span class="project__num">02</span>
-          <p class="project__body">
-            Conducted research and authored a pitch deck exploring the feasibility and
-            structure of an offshore IPO offering for a corporate client. Covered
-            market entry considerations, regulatory context, and deal structure.
-          </p>
-        </article>
-
-        <article class="project reveal">
-          <div>
-            <h3 class="project__title">Commercial Due Diligence — Rankin Ellison Lawyers</h3>
-            <p class="project__type">Legal Due Diligence · Commercial Litigation</p>
-          </div>
-          <span class="project__num">03</span>
-          <p class="project__body">
-            Contributed to initial due diligence processes across conveyancing and
-            commercial litigation matters. Produced research reports and legal
-            analysis to support case strategy and client advisory.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ LEADERSHIP ============================ -->
+  <!-- LEADERSHIP -->
   <section id="leadership" aria-label="Leadership and extracurriculars">
     <div class="wrap">
       <p class="label reveal">Leadership</p>
 
       <div class="lead-grid reveal">
         <div class="lead-item">
-          <h3 class="lead-item__title">FMAA — Financial Management Association Australia</h3>
-          <p class="lead-item__meta">Subcommittee Member · Oct 2025 – Present</p>
-          <p class="lead-item__body">
-            Organise professional networking and career events for 300+ students.
-            Liaise with firm representatives and support sponsorship outreach across
-            major financial institutions.
-          </p>
+          <div class="lead-item__head">
+            <div class="co-logo" style="background:#1a1a1a;border-color:#333;">
+              <img src="images/fmaa.png" alt="FMAA" />
+            </div>
+            <div class="lead-item__head-text">
+              <h3 class="lead-item__title"><a class="org-fmaa" href="https://www.fmaa.com.au/" target="_blank" rel="noopener">FMAA</a></h3>
+              <p class="lead-item__meta">Subcommittee Member · Oct 2025 — Present</p>
+            </div>
+          </div>
+          <p class="lead-item__body">Organise professional networking and career events for 300+ students. Liaise with firm representatives and support sponsorship outreach across major financial institutions.</p>
         </div>
 
         <div class="lead-item">
-          <h3 class="lead-item__title">UNSW Consulting Club (UCC)</h3>
-          <p class="lead-item__meta">International Case Competition Squad; Publications Associate · Mar 2026 – Present</p>
-          <p class="lead-item__body">
-            Member of a globally recognised student initiative supported by the UNSW
-            Business School. Edit and publish articles for the UCC Coffee Connect
-            Newsletter following interviews with consulting professionals.
-          </p>
+          <div class="lead-item__head">
+            <div class="co-logo">
+              <img src="images/ucc.png" alt="UNSW Consulting Club" />
+            </div>
+            <div class="lead-item__head-text">
+              <h3 class="lead-item__title"><a class="org-ucc" href="https://www.unswconsultingclub.com/" target="_blank" rel="noopener">UNSW Consulting Club</a></h3>
+              <p class="lead-item__meta">Case Competition Squad; Publications Associate · Mar 2026 — Present</p>
+            </div>
+          </div>
+          <p class="lead-item__body">International case competition squad member. Edit and publish articles for the UCC Coffee Connect Newsletter following interviews with consulting professionals.</p>
         </div>
 
         <div class="lead-item">
-          <h3 class="lead-item__title">UNSW Elite Athlete Program — Football</h3>
-          <p class="lead-item__meta">UNSW FC Senior Men's Squad, NPL Division 1 NSW · Feb 2025 – Present</p>
-          <p class="lead-item__body">
-            Compete at the National Premier Leagues level while maintaining a full
-            academic and professional schedule. Previously part of the Newcastle Jets
-            Academy. UNSW Elite Athlete Program member.
-          </p>
+          <div class="lead-item__head">
+            <div class="co-logo">
+              <img src="images/unsw.png" alt="UNSW" />
+            </div>
+            <div class="lead-item__head-text">
+              <h3 class="lead-item__title"><a class="org-unsw" href="https://www.sport.unsw.edu.au/sport/elite-athlete-program" target="_blank" rel="noopener">UNSW Elite Athlete — Football</a></h3>
+              <p class="lead-item__meta">UNSW FC, NPL Division 1 NSW · Feb 2025 — Present</p>
+            </div>
+          </div>
+          <p class="lead-item__body">Compete at National Premier Leagues level while maintaining a full academic and professional schedule. Previously Newcastle Jets Academy. UNSW Elite Athlete Program member.</p>
         </div>
 
         <div class="lead-item">
-          <h3 class="lead-item__title">Evatt Model United Nations</h3>
-          <p class="lead-item__meta">State Finalist · Merewether High School</p>
-          <p class="lead-item__body">
-            Competed at state level in Australia's premier secondary school MUN
-            competition, developing research, argumentation, and negotiation skills.
-          </p>
-        </div>
-
-        <div class="lead-item">
-          <h3 class="lead-item__title">State Debating</h3>
-          <p class="lead-item__meta">Representative, NSW · Merewether High School</p>
-          <p class="lead-item__body">
-            Represented school at state-level competition.
-          </p>
+          <div class="lead-item__head">
+            <div class="co-logo">
+              <img src="images/mhs.png" alt="Merewether High School" />
+            </div>
+            <div class="lead-item__head-text">
+              <h3 class="lead-item__title"><a class="org-mhs" href="https://merewether-h.schools.nsw.gov.au/" target="_blank" rel="noopener">Evatt MUN · State Debating</a></h3>
+              <p class="lead-item__meta">Merewether High School</p>
+            </div>
+          </div>
+          <p class="lead-item__body">State finalist in Australia's premier secondary school MUN competition. NSW State Debating representative.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================ SKILLS ============================ -->
+  <!-- SKILLS -->
   <section id="skills" aria-label="Skills and interests">
     <div class="wrap">
       <p class="label reveal">Skills &amp; Interests</p>
-
       <dl class="skills reveal">
         <dt>Languages</dt>
         <dd>English (Native) · Mandarin / Chinese (Conversational)</dd>
-
         <dt>Technical</dt>
         <dd>Microsoft Excel · PowerPoint · Word · LexisNexis CaseBase</dd>
-
         <dt>Certifications</dt>
-        <dd>Forage JP Morgan Investment Banking Virtual Programme · Forage KWM Commercial Law Course</dd>
-
+        <dd>Forage JP Morgan Investment Banking · Forage KWM Commercial Law</dd>
         <dt>Interests</dt>
         <dd>Football · Running · AI &amp; Emerging Technology · Psychological &amp; Philosophical Fiction</dd>
       </dl>
     </div>
   </section>
 
-  <!-- ============================ CONTACT ============================ -->
+  <!-- CONTACT -->
   <section id="contact" aria-label="Contact">
     <div class="wrap contact">
       <p class="label reveal" style="justify-content:center;">Contact</p>
       <h2 class="contact__head reveal">Let's connect.</h2>
-      <p class="contact__sub reveal">
-        I'm always open to conversations about finance, law, and the
-        space in between.
-      </p>
+      <p class="contact__sub reveal">Open to conversations about finance, law, and the space in between.</p>
       <div class="contact__links reveal">
-        <a href="https://www.linkedin.com/in/andrewchenn/" target="_blank" rel="noopener" aria-label="LinkedIn profile">LinkedIn <span class="arrow">↗</span></a>
+        <a href="https://www.linkedin.com/in/andrewchenn/" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
+        <a href="https://www.instagram.com/andrewchenn/" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a>
+        <a href="https://www.facebook.com/andrewchenn/" target="_blank" rel="noopener">Facebook <span class="arrow">↗</span></a>
         <a href="mailto:andrewnehc11@gmail.com">andrewnehc11@gmail.com</a>
       </div>
     </div>
   </section>
 
-  <footer>
-    © 2026 Andrew Chen
-  </footer>
+  <footer>© 2026 Andrew Chen</footer>
 
 </main>
 
 <script>
-  // ——— Scroll-aware nav
+  (function () {
+    const html = document.documentElement;
+    const btn  = document.getElementById('theme-toggle');
+    const KEY  = 'ac-theme';
+    const saved = localStorage.getItem(KEY);
+    if (saved) html.setAttribute('data-theme', saved);
+    btn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem(KEY, next);
+    });
+  })();
+
   (function () {
     const nav = document.getElementById('nav');
     let ticking = false;
     function update() {
-      const y = window.scrollY || window.pageYOffset;
-      nav.classList.toggle('is-stuck', y > 24);
+      nav.classList.toggle('is-stuck', (window.scrollY || window.pageYOffset) > 24);
       ticking = false;
     }
     window.addEventListener('scroll', () => {
@@ -821,19 +887,15 @@
     update();
   })();
 
-  // ——— Reveal on scroll
   (function () {
     const els = document.querySelectorAll('.reveal');
     if (!('IntersectionObserver' in window)) {
       els.forEach(el => el.classList.add('is-in'));
       return;
     }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-in');
-          io.unobserve(entry.target);
-        }
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
     els.forEach(el => io.observe(el));
